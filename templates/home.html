@@ -1,0 +1,45 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Chat Assistant</title>  
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">  
+</head>  
+<body>  
+  
+<div class="container">        
+  {% if assistant_response %}  
+  <!-- Displaying response -->  
+  <ul class='chat-thread'>  
+      {% for message in conversation %}  
+        {% if message.role == "user" %}  
+          <li class='user-message'>{{message.content}}</li>       
+        {% else %}       
+          <li class='assistant-message'>{{message.content}}</li>       
+        {% endif %}         
+      {% endfor %}  
+  </ul>  
+  {% endif %}  
+  
+<form action="/" method='POST'>  
+  
+<input type='text' name='user_input'  
+       id ='user_input'  
+       placeholder = "Type your message here..." required/>  
+<button type ="submit">Send Message</button>  
+  
+  
+</form>  
+  
+      
+</div>  
+  
+<script >  
+// Optional JavaScript to scroll down automatically after submitting.  
+document.getElementById("user_input").focus();  
+window.scrollTo(0, document.body.scrollHeight);  
+</script>  
+  
+</body>  
+</html>   

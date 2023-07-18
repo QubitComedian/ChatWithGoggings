@@ -1,0 +1,54 @@
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-thumb{border-radius:10px;background-color:rgba(255,255,255,0.2);}
+::-webkit-scrollbar-track{border-radius:10px;background-color:rgba(255,255,255,0.1);}
+
+body{font-size:100%;background-image:linear-gradient(top left,#333,black);background-attachment:fixed;}
+*,*:before,*:after{box-sizing:border-box;}
+ul,li{list-style-type:none;}
+
+.user-message, .assistant-message {
+    margin-bottom:20px;
+    padding:10px 20px;
+    position:relative;
+    border-radius:10px;
+    font:1em/1.6 "arial";
+    clear:both;
+    text-shadow:1px 1px 0 rgba(255,255,255,0.35);
+}
+
+.user-message {
+    float:left;
+    margin-left:80px;
+    background-color:rgba(255,255,255,0.65);
+}
+
+.assistant-message {
+    float:right;
+    margin-right:80px;
+    color:rgba(255,255,255,0.9);
+    text-shadow:1px 1px 0 rgba(0,0,0,0.75);
+    background-color:rgba(255,255,255,0.3);
+}
+
+.user-message img, .assistant-message img {
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    border-radius: 50%;
+    top: 0;
+}
+
+.user-message img {
+    left: -80px;
+}
+
+.assistant-message img {
+    right: -80px;
+}
+
+@media only screen and (min-width:768px){
+  .wrapper ul{width:50%;height:300px;}
+}
+@media only screen and (max-width:767px){
+  .wrapper ul{width:90%;height:260px;}
+}

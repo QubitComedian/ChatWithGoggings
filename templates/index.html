@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Goggins</title>
+</head>
+<body>
+    <div class="chat-container">
+        <h1>Chat with Goggins</h1>
+        <form action="/" method="POST">
+            <input type="text" name="user_message" id="user_message" placeholder="Type your message here...">
+            <input type="submit" value="Send">
+        </form>
+        <div class="chat">
+            {% for message in messages %}
+                <p class="{{ message.role }}">{{ message.content }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

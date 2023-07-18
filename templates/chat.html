@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ask Goggins</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/chat.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='photo/gym.png') }}" type="image/x-icon">
+</head>
+<body>
+    <video autoplay muted loop id="myVideo">
+        <source src="{{ url_for('static', filename='photo/goggings2.mp4') }}" type="video/mp4">
+    </video>
+    <div id="chatbox">
+        {% for message in messages %}
+            {% if message.role == 'user' %}
+                <div class="user-message">
+                    <img src="{{ url_for('static', filename='photo/lazyguy1.jpg') }}" alt="User">
+                    <p>{{ message.content }}</p>
+                </div>
+            {% else %}
+                <div class="assistant-message">
+                    {% if message.image_url %}
+                        <img src="{{ message.image_url }}" alt="Image">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='photo/goggings1.jpg') }}" alt="Assistant">
+                        <p>{{ message.content }}</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <form id="user_input_form" method="post">
+        <input type="text" id="user_input" name="user_input" placeholder="Tell me about YOU..." required>
+        <input type="submit" value="Submit">
+    </form>
+    <audio id="background-music" loop>
+        <source src="{{ url_for('static', filename='tibro.mp3') }}" type="audio/mpeg">
+    </audio>
+    <img id="music-control" src="{{ url_for('static', filename='speaker-on.png') }}" alt="Music Control" style="width: 50px; height: 50px; cursor: pointer;">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        var music = document.getElementById('background-music');
+        var musicControl = document.getElementById('music-control');
+
+        // Play the music as soon as the page loads
+        music.play();
+        musicControl.src = "{{ url_for('static', filename='photo/soundoff.png') }}";
+
+        // Loading messages array
+        var loading_messages = [
+            "Breaking the world record for most pull-ups",
+            "Running a marathon backwards while blindfolded",
+            "Swimming with sharks for breakfast",
+            "Climbing Mount Everest without oxygen, just for fun",
+            "Surfing a tsunami just to catch the perfect wave",
+            "Skydiving into a volcano for an adrenaline rush",
+            "Skiing down a mountain of hot lava",
+            "Crossing the Sahara Desert on a unicycle",
+            "Juggling flaming kettlebells in zero gravity",
+            "Powerlifting a blue whale for a warm-up",
+            "Arm wrestling a gorilla while doing handstands",
+            "Running barefoot on a treadmill set to maximum speed",
+            "Jumping over a canyon with a pogo stick",
+            "Snowboarding down an active volcano",
+            "Boxing a kangaroo in the Outback",
+            "Racing against cheetahs on a track made of ice",
+            "Doing a triple backflip while bungee jumping",
+            "Powerlifting a mountain range with one hand",
+            "Completing an Ironman triathlon with a fridge strapped to my back",
+            "Balancing on a tightrope between skyscrapers during a hurricane",
+            "Playing basketball with a bowling ball on a trampoline",
+            "Swimming across the Atlantic Ocean with lead boots",
+            "Cycling through a minefield blindfolded",
+            "Running a marathon on a treadmill that's on fire",
+            "Surfing a tsunami of hot sauce",
+            "Doing a handstand on top of a speeding train",
+            "Playing dodgeball with cannonballs",
+            "Water skiing on a lake of liquid nitrogen",
+            "Licking my own balls",
+            "Running a 100-meter dash on a tightrope",
+            "Mountain biking through a forest of cacti",
+            "Breaking the sound barrier with a single punch",
+            "Rock climbing using spaghetti noodles as ropes",
+            "Swinging from skyscraper to skyscraper on a vine made of licorice",
+            "Competing in a high-dive competition from outer space",
+            "Doing yoga poses on a tightrope over a volcano",
+            "Snowboarding down the Great Wall of China",
+            "Juggling chainsaws while riding a unicycle on a tightrope",
+            "Running a marathon while juggling flaming torches",
+            "Bungee jumping off the Eiffel Tower without a bungee cord",
+            "Breaking the land speed record on a tricycle",
+            "Sumo wrestling with a sumo wrestler dressed as a T-Rex",
+            "Catching a football with my teeth from a cannon",
+            "Playing tennis with a live grenade as the ball",
+            "Running a marathon while carrying a grand piano",
+            "Performing a 360-degree slam dunk from a helicopter",
+            "Jumping over a skyscraper on a pogo stick",
+            "Swimming across the English Channel with both hands tied",
+            "Running a 100-meter sprint on a tightrope over a shark tank",
+            "Playing soccer blindfolded on a minefield",
+            "Competing in a triathlon with a backpack full of bowling balls",
+            "Mountain biking on a trail made of lava",
+            "Water skiing on a river of molten chocolate",
+            "Running a marathon underwater with a 100-pound backpack",
+            "Completing a half-marathon while juggling chainsaws",
+            "Surfing on a wave created by a speeding bullet train",
+            "Climbing Mount Kilimanjaro in a gorilla suit",
+        ];
+
+        $('#user_input_form').on('submit', function(e) {
+            e.preventDefault();  // Prevent the form from submitting normally
+
+            var user_input = $('#user_input').val();
+
+            // Append the user's message to the chatbox
+            $('#chatbox').append('<div class="user-message"><img src="{{ url_for('static', filename='photo/lazyguy1.jpg') }}" alt="User"><p>' + user_input + '</p></div>');
+
+            // Pick a random loading message
+            var random_loading_message = loading_messages[Math.floor(Math.random() * loading_messages.length)];
+
+            // Append the "loading" message to the chatbox without the static dots
+            var loading_message_box = $('<div id="loading" class="assistant-message"><img src="{{ url_for('static', filename='photo/goggings1.jpg') }}" alt="Assistant"><p>' + random_loading_message + '</p></div>');
+            $('#chatbox').append(loading_message_box);
+
+            // Create a loading indicator with a sequence of dots
+            var i = 0;
+            var dot_sequence = "";
+            var loading_interval = setInterval(function() {
+                if (i < 3) {
+                    dot_sequence += '.';
+                    loading_message_box.children('p').text(random_loading_message + dot_sequence);
+                    i++;
+                } else {
+                    // Reset the loading message and start over
+                    dot_sequence = '';
+                    loading_message_box.children('p').text(random_loading_message);
+                    i = 0;
+                }
+            }, 500);  // Update every 500 milliseconds
+
+            if (user_input.startsWith('/image')) {
+                $.ajax({
+                    url: '/image',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({user_input: user_input}),
+                    success: function(response) {
+                        // Remove the loading message and stop the loading indicator
+                        clearInterval(loading_interval);
+                        $('#loading').remove();
+
+                        var image_url = response['image_url'];
+
+                        // Append the image to the chatbox
+                        $('#chatbox').append('<div class="assistant-message"><img src="' + image_url + '" alt="Image output"></div>');
+
+                        $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);  // Scroll to the bottom
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({user_input: user_input}),  // Convert the user_input to a JSON string
+                    success: function(response) {
+                        // Remove the loading message and stop the loading indicator
+                        clearInterval(loading_interval);
+                        $('#loading').remove();
+
+                        var assistant_response = response['assistant_response'];
+                        
+                        // Create the assistant message box and append it to the chatbox
+                        var assistant_message_box = $('<div class="assistant-message"><img src="{{ url_for('static', filename='photo/goggings1.jpg') }}" alt="Assistant"><p></p></div>');
+                        $('#chatbox').append(assistant_message_box);
+
+                        // "Type" the message out one character at a time
+                        var i = 0;
+                        var typing_speed = 30;  // Speed in milliseconds
+                        var typing_interval = setInterval(function() {
+                            if (i < assistant_response.length) {
+                                assistant_message_box.children('p').append(assistant_response.charAt(i));
+                                i++;
+                            } else {
+                                clearInterval(typing_interval);
+                            }
+                        }, typing_speed);
+
+                        $('#user_input').val('');  // Clear the input field
+                        $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);  // Scroll to the bottom
+                    }
+                });
+            }
+        });
+
+        musicControl.addEventListener('click', function() {
+            if (music.paused) {
+                music.play();
+                musicControl.src = "{{ url_for('static', filename='photo/soundon.png') }}";
+            } else {
+                music.pause();
+                musicControl.src = "{{ url_for('static', filename='photo/soundoff.png') }}";
+            }
+        });
+    });
+</script>
+</body>
+</html>

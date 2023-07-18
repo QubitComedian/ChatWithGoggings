@@ -1,0 +1,108 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e9eaed;
+    margin: 0;
+    padding: 0;
+}
+
+#myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%; 
+    min-height: 100%;
+    z-index: -1;
+}
+
+#chatbox {
+    margin: 20px auto;
+    width: 90%;
+    height: 500px;
+    border: 10px solid #ddd;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    overflow: auto;
+}
+
+.user-message, .assistant-message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-message img, .assistant-message img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-message p, .assistant-message p {
+    background-color: #ddd;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.user-message {
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+}
+
+.user-message img {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+.user-message p {
+    background-color: #0b93f6;
+    color: #fff;
+}
+
+#user_input {
+    width: 80%;
+    margin: 20px auto;
+    display: block;
+    padding: 10px;
+}
+
+input[type="submit"] {
+    display: block;
+    width: 100px;
+    height: 40px;
+    margin: 20px auto;
+    background-color: #0b93f6;
+    color: #fff;
+    border-radius: 3px;
+    border: 0;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0a82d1;
+}
+
+input::-webkit-input-placeholder {
+    color: grey;
+    font-style: italic;
+}
+input::-moz-placeholder {
+    color: grey;
+    font-style: italic;
+}
+input::-ms-input-placeholder {
+    color: grey;
+    font-style: italic;
+}
+
+/* Media query for devices with width less than or equal to 600px */
+@media only screen and (max-width: 600px) {
+    #chatbox {
+        width: 100%;
+    }
+    #user_input {
+        width: 90%;
+    }
+    input[type="submit"] {
+        width: 80px;
+    }
+}
